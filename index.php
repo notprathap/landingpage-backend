@@ -10,12 +10,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $klein = new \Klein\Klein();
 
-$klein->respond('GET', '/hello-world', function () {
-    return 'Hello World!';
+$klein->respond('POST', '/subscriber', function ($request, $response, $service, $app) {
+    return print_r($request->param('email'));
 });
 
-$klein->respond('GET', '/goodbye-world', function () {
-    return 'Goodbye World!';
+$klein->respond('POST', '/teacher', function ($request, $response, $service, $app) {
+    return print_r($request->param('school').' '.$request->param('name'));
 });
 
 $klein->dispatch();
