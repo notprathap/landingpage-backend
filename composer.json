@@ -1,5 +1,9 @@
 {
     "require": {
-        "klein/klein": "~2.1"
+        "klein/klein": "~2.1",
+        "propel/propel": "~2.0@dev"
+    },
+    "autoload": {
+        "classmap": ["generated-classes/"]
     }
 }

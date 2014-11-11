@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<config>
+    <propel>
+        <database>
+            <connections>
+                <connection id="teacherstore">
+                    <adapter>mysql</adapter>
+                    <classname>Propel\Runtime\Connection\ConnectionWrapper</classname>
+                    <dsn>mysql:host=localhost;dbname=teacherstore</dsn>
+                    <user>root</user>
+                    <password>password</password>
+                </connection>
+            </connections>
+        </database>
+        <runtime>
+            <defaultConnection>teacherstore</defaultConnection>
+            <connection>teacherstore</connection>
+        </runtime>
+        <generator>
+            <defaultConnection>teacherstore</defaultConnection>
+            <connection>teacherstore</connection>
+        </generator>
+    </propel>
+</config>

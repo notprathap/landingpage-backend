@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="teacherstore" defaultIdMethod="native">
+    <table name="teacher" phpName="Teacher">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="email" type="varchar" size="255" required="true" />
+        <column name="title" type="varchar" size="255" required="true" />
+        <column name="name" type="varchar" size="255" required="true" />
+        <column name="school_name" type="varchar" size="255" required="true" />
+    </table>
+</database>
