@@ -21,15 +21,11 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildTeacherQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildTeacherQuery orderByEmail($order = Criteria::ASC) Order by the email column
- * @method     ChildTeacherQuery orderByTitle($order = Criteria::ASC) Order by the title column
  * @method     ChildTeacherQuery orderByName($order = Criteria::ASC) Order by the name column
- * @method     ChildTeacherQuery orderBySchoolName($order = Criteria::ASC) Order by the school_name column
  *
  * @method     ChildTeacherQuery groupById() Group by the id column
  * @method     ChildTeacherQuery groupByEmail() Group by the email column
- * @method     ChildTeacherQuery groupByTitle() Group by the title column
  * @method     ChildTeacherQuery groupByName() Group by the name column
- * @method     ChildTeacherQuery groupBySchoolName() Group by the school_name column
  *
  * @method     ChildTeacherQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildTeacherQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -40,16 +36,12 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildTeacher findOneById(int $id) Return the first ChildTeacher filtered by the id column
  * @method     ChildTeacher findOneByEmail(string $email) Return the first ChildTeacher filtered by the email column
- * @method     ChildTeacher findOneByTitle(string $title) Return the first ChildTeacher filtered by the title column
  * @method     ChildTeacher findOneByName(string $name) Return the first ChildTeacher filtered by the name column
- * @method     ChildTeacher findOneBySchoolName(string $school_name) Return the first ChildTeacher filtered by the school_name column
  *
  * @method     ChildTeacher[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTeacher objects based on current ModelCriteria
  * @method     ChildTeacher[]|ObjectCollection findById(int $id) Return ChildTeacher objects filtered by the id column
  * @method     ChildTeacher[]|ObjectCollection findByEmail(string $email) Return ChildTeacher objects filtered by the email column
- * @method     ChildTeacher[]|ObjectCollection findByTitle(string $title) Return ChildTeacher objects filtered by the title column
  * @method     ChildTeacher[]|ObjectCollection findByName(string $name) Return ChildTeacher objects filtered by the name column
- * @method     ChildTeacher[]|ObjectCollection findBySchoolName(string $school_name) Return ChildTeacher objects filtered by the school_name column
  * @method     ChildTeacher[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -141,7 +133,7 @@ abstract class TeacherQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, email, title, name, school_name FROM teacher WHERE id = :p0';
+        $sql = 'SELECT id, email, name FROM teacher WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -302,35 +294,6 @@ abstract class TeacherQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the title column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTitle('fooValue');   // WHERE title = 'fooValue'
-     * $query->filterByTitle('%fooValue%'); // WHERE title LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $title The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTeacherQuery The current query, for fluid interface
-     */
-    public function filterByTitle($title = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($title)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $title)) {
-                $title = str_replace('*', '%', $title);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(TeacherTableMap::COL_TITLE, $title, $comparison);
-    }
-
-    /**
      * Filter the query on the name column
      *
      * Example usage:
@@ -357,35 +320,6 @@ abstract class TeacherQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(TeacherTableMap::COL_NAME, $name, $comparison);
-    }
-
-    /**
-     * Filter the query on the school_name column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterBySchoolName('fooValue');   // WHERE school_name = 'fooValue'
-     * $query->filterBySchoolName('%fooValue%'); // WHERE school_name LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $schoolName The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildTeacherQuery The current query, for fluid interface
-     */
-    public function filterBySchoolName($schoolName = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($schoolName)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $schoolName)) {
-                $schoolName = str_replace('*', '%', $schoolName);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(TeacherTableMap::COL_SCHOOL_NAME, $schoolName, $comparison);
     }
 
     /**

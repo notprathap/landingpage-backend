@@ -18,21 +18,10 @@ $klein->respond('POST', '/subscriber', function ($request, $response, $service, 
     if ($teacher->count() == 0){
         $teacher = new Teacher();
         $teacher->setEmail($request->param('email'));
+        $teacher->setName($request->param('name'));
         $teacher->save();
     }
 
-    return true;
-});
-
-$klein->respond('POST', '/teacher', function ($request, $response, $service, $app) {
-    // fetch record with email as the key
-    $q = new TeacherQuery();
-    /** @var Teacher $teacher */
-    $teacher = $q->findByEmail($request->param('email'))[0];
-    $teacher->setTitle($request->param('title'));
-    $teacher->setName($request->param('name'));
-    $teacher->setSchoolName($request->param('school'));
-    $teacher->save();
     return true;
 });
 

@@ -59,7 +59,7 @@ class TeacherTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TeacherTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /**
      * the column name for the id field
@@ -82,19 +82,9 @@ class TeacherTableMap extends TableMap
     const COL_EMAIL = 'teacher.email';
 
     /**
-     * the column name for the title field
-     */
-    const COL_TITLE = 'teacher.title';
-
-    /**
      * the column name for the name field
      */
     const COL_NAME = 'teacher.name';
-
-    /**
-     * the column name for the school_name field
-     */
-    const COL_SCHOOL_NAME = 'teacher.school_name';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +98,11 @@ class TeacherTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Email', 'Title', 'Name', 'SchoolName', ),
-        self::TYPE_CAMELNAME     => array('id', 'email', 'title', 'name', 'schoolName', ),
-        self::TYPE_COLNAME       => array(TeacherTableMap::COL_ID, TeacherTableMap::COL_EMAIL, TeacherTableMap::COL_TITLE, TeacherTableMap::COL_NAME, TeacherTableMap::COL_SCHOOL_NAME, ),
-        self::TYPE_FIELDNAME     => array('id', 'email', 'title', 'name', 'school_name', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Email', 'Name', ),
+        self::TYPE_CAMELNAME     => array('id', 'email', 'name', ),
+        self::TYPE_COLNAME       => array(TeacherTableMap::COL_ID, TeacherTableMap::COL_EMAIL, TeacherTableMap::COL_NAME, ),
+        self::TYPE_FIELDNAME     => array('id', 'email', 'name', ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -122,11 +112,11 @@ class TeacherTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Email' => 1, 'Title' => 2, 'Name' => 3, 'SchoolName' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'email' => 1, 'title' => 2, 'name' => 3, 'schoolName' => 4, ),
-        self::TYPE_COLNAME       => array(TeacherTableMap::COL_ID => 0, TeacherTableMap::COL_EMAIL => 1, TeacherTableMap::COL_TITLE => 2, TeacherTableMap::COL_NAME => 3, TeacherTableMap::COL_SCHOOL_NAME => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'email' => 1, 'title' => 2, 'name' => 3, 'school_name' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Email' => 1, 'Name' => 2, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'email' => 1, 'name' => 2, ),
+        self::TYPE_COLNAME       => array(TeacherTableMap::COL_ID => 0, TeacherTableMap::COL_EMAIL => 1, TeacherTableMap::COL_NAME => 2, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'email' => 1, 'name' => 2, ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -148,9 +138,7 @@ class TeacherTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 255, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
-        $this->addColumn('school_name', 'SchoolName', 'VARCHAR', true, 255, null);
     } // initialize()
 
     /**
@@ -303,15 +291,11 @@ class TeacherTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(TeacherTableMap::COL_ID);
             $criteria->addSelectColumn(TeacherTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(TeacherTableMap::COL_TITLE);
             $criteria->addSelectColumn(TeacherTableMap::COL_NAME);
-            $criteria->addSelectColumn(TeacherTableMap::COL_SCHOOL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.title');
             $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.school_name');
         }
     }
 

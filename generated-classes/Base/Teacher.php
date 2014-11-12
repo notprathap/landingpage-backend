@@ -72,22 +72,10 @@ abstract class Teacher implements ActiveRecordInterface
     protected $email;
 
     /**
-     * The value for the title field.
-     * @var        string
-     */
-    protected $title;
-
-    /**
      * The value for the name field.
      * @var        string
      */
     protected $name;
-
-    /**
-     * The value for the school_name field.
-     * @var        string
-     */
-    protected $school_name;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -335,16 +323,6 @@ abstract class Teacher implements ActiveRecordInterface
     }
 
     /**
-     * Get the [title] column value.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
      * Get the [name] column value.
      *
      * @return string
@@ -352,16 +330,6 @@ abstract class Teacher implements ActiveRecordInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get the [school_name] column value.
-     *
-     * @return string
-     */
-    public function getSchoolName()
-    {
-        return $this->school_name;
     }
 
     /**
@@ -405,26 +373,6 @@ abstract class Teacher implements ActiveRecordInterface
     } // setEmail()
 
     /**
-     * Set the value of [title] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Teacher The current object (for fluent API support)
-     */
-    public function setTitle($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->title !== $v) {
-            $this->title = $v;
-            $this->modifiedColumns[TeacherTableMap::COL_TITLE] = true;
-        }
-
-        return $this;
-    } // setTitle()
-
-    /**
      * Set the value of [name] column.
      *
      * @param  string $v new value
@@ -443,26 +391,6 @@ abstract class Teacher implements ActiveRecordInterface
 
         return $this;
     } // setName()
-
-    /**
-     * Set the value of [school_name] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Teacher The current object (for fluent API support)
-     */
-    public function setSchoolName($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->school_name !== $v) {
-            $this->school_name = $v;
-            $this->modifiedColumns[TeacherTableMap::COL_SCHOOL_NAME] = true;
-        }
-
-        return $this;
-    } // setSchoolName()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -506,14 +434,8 @@ abstract class Teacher implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TeacherTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TeacherTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TeacherTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TeacherTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TeacherTableMap::translateFieldName('SchoolName', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->school_name = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -522,7 +444,7 @@ abstract class Teacher implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = TeacherTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = TeacherTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Teacher'), 0, $e);
@@ -725,14 +647,8 @@ abstract class Teacher implements ActiveRecordInterface
         if ($this->isColumnModified(TeacherTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(TeacherTableMap::COL_TITLE)) {
-            $modifiedColumns[':p' . $index++]  = 'title';
-        }
         if ($this->isColumnModified(TeacherTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
-        }
-        if ($this->isColumnModified(TeacherTableMap::COL_SCHOOL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'school_name';
         }
 
         $sql = sprintf(
@@ -751,14 +667,8 @@ abstract class Teacher implements ActiveRecordInterface
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
-                    case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
-                        break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
-                        break;
-                    case 'school_name':
-                        $stmt->bindValue($identifier, $this->school_name, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -829,13 +739,7 @@ abstract class Teacher implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 2:
-                return $this->getTitle();
-                break;
-            case 3:
                 return $this->getName();
-                break;
-            case 4:
-                return $this->getSchoolName();
                 break;
             default:
                 return null;
@@ -868,9 +772,7 @@ abstract class Teacher implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getEmail(),
-            $keys[2] => $this->getTitle(),
-            $keys[3] => $this->getName(),
-            $keys[4] => $this->getSchoolName(),
+            $keys[2] => $this->getName(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -917,13 +819,7 @@ abstract class Teacher implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 2:
-                $this->setTitle($value);
-                break;
-            case 3:
                 $this->setName($value);
-                break;
-            case 4:
-                $this->setSchoolName($value);
                 break;
         } // switch()
 
@@ -958,13 +854,7 @@ abstract class Teacher implements ActiveRecordInterface
             $this->setEmail($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setTitle($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setName($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setSchoolName($arr[$keys[4]]);
+            $this->setName($arr[$keys[2]]);
         }
     }
 
@@ -1013,14 +903,8 @@ abstract class Teacher implements ActiveRecordInterface
         if ($this->isColumnModified(TeacherTableMap::COL_EMAIL)) {
             $criteria->add(TeacherTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(TeacherTableMap::COL_TITLE)) {
-            $criteria->add(TeacherTableMap::COL_TITLE, $this->title);
-        }
         if ($this->isColumnModified(TeacherTableMap::COL_NAME)) {
             $criteria->add(TeacherTableMap::COL_NAME, $this->name);
-        }
-        if ($this->isColumnModified(TeacherTableMap::COL_SCHOOL_NAME)) {
-            $criteria->add(TeacherTableMap::COL_SCHOOL_NAME, $this->school_name);
         }
 
         return $criteria;
@@ -1109,9 +993,7 @@ abstract class Teacher implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setEmail($this->getEmail());
-        $copyObj->setTitle($this->getTitle());
         $copyObj->setName($this->getName());
-        $copyObj->setSchoolName($this->getSchoolName());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1149,9 +1031,7 @@ abstract class Teacher implements ActiveRecordInterface
     {
         $this->id = null;
         $this->email = null;
-        $this->title = null;
         $this->name = null;
-        $this->school_name = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
